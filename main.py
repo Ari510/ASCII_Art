@@ -2,7 +2,7 @@ from PIL import Image
 from mpmath.libmp import round_down
 
 img = Image.open("ascii-pineapple.jpg")
-print(img.mode, img.width, img.height, img.format)
+print(img.width, img.height, img.format)
 
 img_matrix = []
 for i in range(0, img.height):
@@ -14,7 +14,26 @@ for i in range(0, img.height):
 print(len(img_matrix))
 print(img_matrix[0][0])
 for i in range(0, len(img_matrix)):
-    for j in range(0, len(img_matrix)):
-        img_matrix[i][j] = int((img_matrix[i][j][0] + img_matrix[i][j][1] + img_matrix[i][j][2])/3)
+    for j in range(0, len(img_matrix[0])):
+        img_matrix[i][j] = (img_matrix[i][j][0] + img_matrix[i][j][1] + img_matrix[i][j][2])/3
 
 print(img_matrix[0][0])
+
+# We are using these 65 ASCII characters: `^\",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$
+# 255/65 = 3,923...
+
+characters = list("`^\",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$")
+print(characters)
+print(len(characters))
+
+# I was originally going to make the brightness values into integers but keeping them as floats
+# will make this easier/better
+
+for i in range(0, len(img_matrix)):
+    for j in range(0, len(img_matrix[0])):
+        img_matrix[i][j] = characters[int(img_matrix[i][j] // 3.923)]
+
+for i in range(0, len(img_matrix)):
+    for j in range(0, len(img_matrix[0])):
+        print(img_matrix[i][j],img_matrix[i][j],img_matrix[i][j], sep="", end="")
+    print()
