@@ -1,7 +1,11 @@
 from PIL import Image
 from mpmath.libmp import round_down
 
-img = Image.open("ascii-pineapple.jpg")
+path = input("JPG-Image filepath: ")
+img = Image.open(path)
+max_size = (500, 500)  # fits inside this box
+img.thumbnail(max_size, Image.LANCZOS)
+
 print(img.width, img.height, img.format)
 
 img_matrix = []
@@ -31,9 +35,11 @@ print(len(characters))
 
 for i in range(0, len(img_matrix)):
     for j in range(0, len(img_matrix[0])):
+        if img_matrix[i][j] == 255:
+            img_matrix[i][j] = 254
         img_matrix[i][j] = characters[int(img_matrix[i][j] // 3.923)]
 
 for i in range(0, len(img_matrix)):
     for j in range(0, len(img_matrix[0])):
-        print(img_matrix[i][j],img_matrix[i][j],img_matrix[i][j], sep="", end="")
+        print(img_matrix[i][j],img_matrix[i][j], sep="", end="")
     print()
